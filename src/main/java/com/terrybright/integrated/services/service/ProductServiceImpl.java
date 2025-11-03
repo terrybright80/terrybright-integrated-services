@@ -1,7 +1,9 @@
-package com.terrybright.integrated.services.service;
+package com.terrybright.integrated.services.service.impl;
 
 import com.terrybright.integrated.services.model.Product;
 import com.terrybright.integrated.services.repository.ProductRepository;
+import com.terrybright.integrated.services.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -28,22 +31,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(Product product) {
-        product.setId(null); // Ensure new product creation
         return productRepository.save(product);
     }
 
     @Override
     public Product update(Long id, Product product) {
-        return productRepository.findById(id)
-            .map(existing -> {
-                existing.setName(product.getName());
-                existing.setDescription(product.getDescription());
-                existing.setPrice(product.getPrice());
-                existing.setQuantity(product.getQuantity());
-                existing.setUnit(product.getUnit());
-                return productRepository.save(existing);
-            })
-            .orElseThrow(() -> new IllegalArgumentException("Product not found: " + id));
+        Product existingProduct = productRepository.findById(id).orElseThrow();
+        existingProduct.setName(product.getName());
+        existingProduct.setPrice(product.getPrice());
+        // Update other fields as needed
+        return productRepository.save(existingProduct);
     }
 
     @Override
