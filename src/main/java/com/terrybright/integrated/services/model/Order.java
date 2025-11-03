@@ -1,62 +1,34 @@
 package com.terrybright.integrated.services.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
 
+@Entity
+@Table(name = "orders")
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productId;
-    private int quantity;
+
     private String customerName;
-    private LocalDateTime orderDate;
+    private Long productId;
+    private Integer quantity;
+    private BigDecimal totalPrice;
 
-    public Order() {
-    }
+    public Order() {}
 
-    public Order(Long id, Long productId, int quantity, String customerName, LocalDateTime orderDate) {
-        this.id = id;
-        this.productId = productId;
-        this.quantity = quantity;
-        this.customerName = customerName;
-        this.orderDate = orderDate;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
 
-    public Long getProductId() {
-        return productId;
-    }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
+    public BigDecimal getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice = totalPrice; }
 }
